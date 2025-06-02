@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2: Número Mayor</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #1abc9c;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card h2 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .card h2 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        button i {
+            margin-right: 8px;
+        }
+        
+        .result {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 5px solid var(--primary);
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .result h3 {
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .back-btn {
+            background: var(--secondary);
+            margin-top: 20px;
+            display: inline-flex;
+            text-decoration: none;
+        }
+        
+        .back-btn:hover {
+            background: #1e2a38;
+        }
+        
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-sort-amount-up"></i> Ejercicio 2: Número Mayor</h1>
+            <p>Compara dos números y determina cuál es el mayor</p>
+        </header>
+        
+        <div class="card">
+            <h2><i class="fas fa-calculator"></i> Comparador de Números</h2>
+            
+            <div class="input-group">
+                <label for="num1">Primer número:</label>
+                <input type="number" id="num1" placeholder="Ingresa un número">
+            </div>
+            
+            <div class="input-group">
+                <label for="num2">Segundo número:</label>
+                <input type="number" id="num2" placeholder="Ingresa otro número">
+            </div>
+            
+            <button onclick="findLargerNumber()">
+                <i class="fas fa-calculator"></i> Comparar
+            </button>
+            
+            <div id="number-result" class="result">
+                <h3>Resultado:</h3>
+                <p id="number-output"></p>
+            </div>
+            
+            <a href="index.html" class="btn back-btn">
+                <i class="fas fa-arrow-left"></i> Volver al Menú
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function findLargerNumber() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const resultDiv = document.getElementById('number-result');
+            const output = document.getElementById('number-output');
+            
+            if (isNaN(num1) || isNaN(num2)) {
+                output.textContent = "Por favor, introduce dos números válidos.";
+                resultDiv.classList.add('show');
+                return;
+            }
+            
+            if (num1 > num2) {
+                output.innerHTML = `El número <strong>${num1}</strong> es mayor que <strong>${num2}</strong>.`;
+                output.style.color = "#3498db";
+            } else if (num2 > num1) {
+                output.innerHTML = `El número <strong>${num2}</strong> es mayor que <strong>${num1}</strong>.`;
+                output.style.color = "#3498db";
+            } else {
+                output.innerHTML = `Ambos números son <strong>iguales</strong> (${num1}).`;
+                output.style.color = "#2ecc71";
+            }
+            
+            resultDiv.classList.add('show');
+        }
+        
+        // Ejemplos iniciales
+        window.onload = function() {
+            document.getElementById('num1').value = "15";
+            document.getElementById('num2').value = "23";
+        };
+    </script>
+</body>
+</html>
