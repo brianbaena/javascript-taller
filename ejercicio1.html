@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1: Palíndromos</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #1abc9c;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card h2 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .card h2 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        button i {
+            margin-right: 8px;
+        }
+        
+        .result {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 5px solid var(--primary);
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .result h3 {
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .back-btn {
+            background: var(--secondary);
+            margin-top: 20px;
+            display: inline-flex;
+            text-decoration: none;
+        }
+        
+        .back-btn:hover {
+            background: #1e2a38;
+        }
+        
+        .example {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-exchange-alt"></i> Ejercicio 1: Palíndromos</h1>
+            <p>Detectar si una palabra o frase es un palíndromo</p>
+        </header>
+        
+        <div class="card">
+            <h2><i class="fas fa-question-circle"></i> ¿Qué es un palíndromo?</h2>
+            <p>Un palíndromo es una palabra, frase o secuencia que se lee igual en un sentido que en otro (por ejemplo: "anilina", "reconocer", "anita lava la tina").</p>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Verificador de Palíndromos</h2>
+            
+            <div class="input-group">
+                <label for="palindrome-input">Introduce una palabra o frase:</label>
+                <input type="text" id="palindrome-input" placeholder="Ej: anita lava la tina">
+                <p class="example">Ejemplos: "reconocer", "anilina", "La ruta natural"</p>
+            </div>
+            
+            <button onclick="checkPalindrome()">
+                <i class="fas fa-check"></i> Verificar
+            </button>
+            
+            <div id="palindrome-result" class="result">
+                <h3>Resultado:</h3>
+                <p id="palindrome-output"></p>
+            </div>
+            
+            <a href="index.html" class="btn back-btn">
+                <i class="fas fa-arrow-left"></i> Volver al Menú
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function checkPalindrome() {
+            const input = document.getElementById('palindrome-input').value;
+            const resultDiv = document.getElementById('palindrome-result');
+            const output = document.getElementById('palindrome-output');
+            
+            if (!input) {
+                output.textContent = "Por favor, introduce una palabra o frase.";
+                resultDiv.classList.add('show');
+                return;
+            }
+            
+            // Limpiar la cadena: eliminar espacios y caracteres especiales, convertir a minúsculas
+            const cleanInput = input.toLowerCase().replace(/[^a-z0-9]/g, '');
+            const reversed = cleanInput.split('').reverse().join('');
+            
+            if (cleanInput === reversed) {
+                output.textContent = `"${input}" es un palíndromo. ✅`;
+                output.style.color = "#2ecc71";
+            } else {
+                output.textContent = `"${input}" NO es un palíndromo. ❌`;
+                output.style.color = "#e74c3c";
+            }
+            
+            resultDiv.classList.add('show');
+        }
+        
+        // Ejemplo inicial
+        window.onload = function() {
+            document.getElementById('palindrome-input').value = "Anita lava la tina";
+        };
+    </script>
+</body>
+</html>
