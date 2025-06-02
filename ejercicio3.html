@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3: Vocales en Frase</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #1abc9c;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card h2 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .card h2 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .input-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .input-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        button i {
+            margin-right: 8px;
+        }
+        
+        .result {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 5px solid var(--primary);
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .result h3 {
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .vowel-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .vowel-item {
+            width: 50px;
+            height: 50px;
+            background: var(--info);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+        }
+        
+        .back-btn {
+            background: var(--secondary);
+            margin-top: 20px;
+            display: inline-flex;
+            text-decoration: none;
+        }
+        
+        .back-btn:hover {
+            background: #1e2a38;
+        }
+        
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-font"></i> Ejercicio 3: Vocales en Frase</h1>
+            <p>Identifica las vocales presentes en una frase</p>
+        </header>
+        
+        <div class="card">
+            <h2><i class="fas fa-search"></i> Buscador de Vocales</h2>
+            
+            <div class="input-group">
+                <label for="vowel-input">Introduce una frase:</label>
+                <textarea id="vowel-input" placeholder="Ej: El veloz murciélago hindú comía feliz cardillo y kiwi"></textarea>
+            </div>
+            
+            <button onclick="findVowels()">
+                <i class="fas fa-search"></i> Buscar vocales
+            </button>
+            
+            <div id="vowel-result" class="result">
+                <h3>Vocales encontradas:</h3>
+                <p id="vowel-output"></p>
+                <div class="vowel-display" id="vowel-display"></div>
+            </div>
+            
+            <a href="index.html" class="btn back-btn">
+                <i class="fas fa-arrow-left"></i> Volver al Menú
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function findVowels() {
+            const input = document.getElementById('vowel-input').value;
+            const resultDiv = document.getElementById('vowel-result');
+            const output = document.getElementById('vowel-output');
+            const display = document.getElementById('vowel-display');
+            
+            if (!input) {
+                output.textContent = "Por favor, introduce una frase.";
+                resultDiv.classList.add('show');
+                return;
+            }
+            
+            // Encontrar todas las vocales (incluyendo mayúsculas y minúsculas)
+            const vowels = input.match(/[aeiouáéíóúü]/gi);
+            
+            display.innerHTML = '';
+            
+            if (!vowels || vowels.length === 0) {
+                output.textContent = "No se encontraron vocales en la frase.";
+            } else {
+                // Eliminar duplicados y ordenar
+                const uniqueVowels = [...new Set(vowels)].sort();
+                output.textContent = `Se encontraron ${vowels.length} vocales de ${uniqueVowels.length} tipos diferentes:`;
+                
+                // Mostrar cada vocal encontrada
+                uniqueVowels.forEach(vowel => {
+                    const vowelElement = document.createElement('div');
+                    vowelElement.className = 'vowel-item';
+                    vowelElement.textContent = vowel.toUpperCase();
+                    display.appendChild(vowelElement);
+                });
+            }
+            
+            resultDiv.classList.add('show');
+        }
+        
+        // Ejemplo inicial
+        window.onload = function() {
+            document.getElementById('vowel-input').value = "El veloz murciélago hindú comía feliz cardillo y kiwi";
+        };
+    </script>
+</body>
+</html>
